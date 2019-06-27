@@ -8,6 +8,35 @@
 
 <body>
     <h1>Ciao Object Method!</h1>
+    <button id="open-close-btn">OPEN</button>
+
+    <input id="secondary-in" type="text"/>
 </body>
+
+<script>
+    let ipc = require('electron').ipcRenderer;
+    let btn = document.getElementById("open-close-btn");
+    let input = document.getElementById("secondary-in");
+    let windowsAlreadyOpen = false;
+
+    btn.addEventListener("click", ()=>{
+        console.log("CLICCATO BOTTONE");
+        if(windowsAlreadyOpen){
+            btn.innerHTML = "OPEN";
+            ipc.send("close-window");
+        } else {
+            btn.innerHTML = "CLOSE";
+            ipc.send("open-window", "NUOVA FINESTRA APERTA!");
+        }
+        windowsAlreadyOpen = !windowsAlreadyOpen;
+    });
+
+    input.addEventListener("input", () => {
+        if(windowsAlreadyOpen){
+            ipc.send("update-secondary", input.value);
+        }
+    });
+
+</script>
 
 </html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ciao Object Method!</title>
+</head>
+
+<body>
+    <h1 id="main-content"></h1>
+</body>
+
+<script>
+    let ipc = require('electron').ipcRenderer;
+    ipc.on('change-text', (event, data) => {
+        let content = document.getElementById("main-content");
+        content.innerHTML = data;
+    });
+
+</script>
+
+</html>
